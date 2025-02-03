@@ -1,7 +1,32 @@
 package calculator;
 
+import camp.nextstep.edu.missionutils.Console;
+
+import java.util.ArrayList;
+
 public class Application {
     public static void main(String[] args) {
-        // TODO: 프로그램 구현
+        // 값 입력받기
+        System.out.println("덧셈할 문자열을 입력해 주세요.");
+        String word = Console.readLine();
+        System.out.println(word);
+
+        // 구분자 정리
+        ArrayList<String> operatorList = new ArrayList<String>();
+        operatorList.add(",");
+        operatorList.add(":");
+        String[] operatorArray = new String[operatorList.size()];
+        for (int i = 0; i < operatorList.size(); i++)
+            operatorArray[i] = operatorList.get(i);
+        String operator = String.join("|", operatorArray);
+
+        // 숫자 연산
+        int sum = 0;
+        String[] result = word.split(operator);
+        for (String s : result) {
+            sum += Integer.parseInt(s);
+        }
+
+        System.out.println(String.format("결과 : %d", sum));
     }
 }
