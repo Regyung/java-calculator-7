@@ -13,7 +13,7 @@ public class Application {
         String word = Console.readLine();
 
         // 기본 구분자 설정
-        ArrayList<String> operatorList = new ArrayList<String>();
+        ArrayList<String> operatorList = new ArrayList<>();
         operatorList.add(",");
         operatorList.add(":");
 
@@ -22,8 +22,8 @@ public class Application {
         Matcher m = p.matcher(word);
         if (m.find()) {
             operatorList.add(String.valueOf(word.charAt(m.start()+2)));
+            word = word.substring(m.end());
         }
-        word = word.substring(m.end());
 
         // 구분자 정리
         String[] operatorArray = new String[operatorList.size()];
@@ -31,13 +31,16 @@ public class Application {
             operatorArray[i] = operatorList.get(i);
         String operator = String.join("|", operatorArray);
 
-        // 숫자 연산
+        // 숫자 검수 및 연산
         int sum = 0;
         String[] result = word.split(operator);
         for (String s : result) {
-            sum += Integer.parseInt(s);
+            int i = Integer.parseInt(s);
+            if (i <= 0)
+                throw new IllegalArgumentException();
+            sum += i;
         }
 
-        System.out.println(String.format("결과 : %d", sum));
+        System.out.printf("결과 : %d%n", sum);
     }
 }
